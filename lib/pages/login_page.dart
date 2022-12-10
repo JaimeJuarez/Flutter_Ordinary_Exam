@@ -15,8 +15,6 @@ class LoginPage extends StatefulWidget {
 
   const LoginPage({Key key}) : super(key: key);
 
-  // const LoginPage({super.key});
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -32,83 +30,38 @@ class _LoginPageState extends State<LoginPage> {
     final bloc = ProviderLogin.of(context);
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.black,
-        //   title: const Text('Login',
-        //       style: TextStyle(
-        //         color: Colors.white,
-        //         fontSize: 25,
-        //         fontWeight: FontWeight.bold,
-        //       )),
-        // ),
-        // backgroundColor: const Color(0xff08288e),
-        body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(height: 0.0),
-              // const Text(
-              //   "Hello {User}",
-              //   style: TextStyle(
-              //     color: Color.fromARGB(255, 20, 20, 20),
-              //     fontSize: 55,
-              //     fontWeight: FontWeight.w500,
-              //     fontFamily: 'Oswald',
-              //   ),
-              // ),
-              Stack(
-                children: [
-                  Container(
-                      padding: const EdgeInsets.fromLTRB(20, 110, 0, 0),
-                      child: const Text(
-                        "Hello James",
-                        style: TextStyle(
-                          fontSize: 55,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 22, 22, 22),
-                          fontFamily: 'Heebo',
-                        ),
-                      ))
-                ],
-              ),
-
-              const SizedBox(height: 35.0),
-              // Row(
-              //   children: const [
-              //     Image(image: AssetImage('assets/img/user_Login.png'))
-              //   ],
-              // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [],
-              ),
-              _columnLogin(bloc),
-            ],
-          ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 0.0),
+            Stack(
+              children: [
+                Container(
+                    padding: const EdgeInsets.fromLTRB(20, 110, 0, 0),
+                    child: const Text(
+                      "Hello James",
+                      style: TextStyle(
+                        fontSize: 55,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 22, 22, 22),
+                        fontFamily: 'Heebo',
+                      ),
+                    ))
+              ],
+            ),
+            const SizedBox(height: 35.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [],
+            ),
+            _columnLogin(bloc),
+          ],
         ),
       ),
+      // ),
     );
   }
-
-  // Widget _buttonSingUp() {
-  //   return MaterialButton(
-  //       padding: const EdgeInsets.symmetric(horizontal: 110.0, vertical: 18.0),
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(30),
-  //       ),
-  //       onPressed: () {},
-  //       color: const Color.fromARGB(255, 0, 0, 0),
-  //       child: Text(
-  //         'Registrarse'.toUpperCase(),
-  //         style: const TextStyle(
-  //           color: Colors.white,
-  //           fontSize: 18,
-  //           fontWeight: FontWeight.bold,
-  //         ),
-  //       ));
-  // }
 
   Widget _buttonLogin() {
     return MaterialButton(
@@ -142,7 +95,6 @@ class _LoginPageState extends State<LoginPage> {
               ],
             );
           }
-          // Navigator.of(context).pushNamed('user_page');
         },
         color: const Color.fromARGB(255, 0, 0, 0),
         child: Text(
@@ -154,72 +106,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ));
   }
-
-  // Widget _buttonRegister() {
-  //   return MaterialButton(
-  //     onPressed: () {},
-  //     elevation: 50,
-  //     padding: const EdgeInsets.symmetric(vertical: 17.0).copyWith(
-  //       left: 15.0,
-  //       right: 15.0,
-  //     ),
-  //     // color: const Color.fromARGB(255, 177, 177, 177),
-  //     color: const Color.fromARGB(0, 255, 255, 255),
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(10),
-  //     ),
-  //     child: GestureDetector(
-  //       onTap: () {
-  //         // Navigator.pushNamed(context, LoginPage.id);
-  //         setState(() {
-  //           selectLogin = false;
-  //         });
-  //       },
-  //       child: const Text(
-  //         'Registrarse',
-  //         style: TextStyle(
-  //             color: Colors.black,
-  //             fontSize: 22,
-  //             fontWeight: FontWeight.bold,
-  //             fontFamily: 'montserrat',
-  //             letterSpacing: 1),
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  // Widget _buttonLoginText() {
-  //   return MaterialButton(
-  //     onPressed: () {},
-  //     elevation: 50,
-  //     padding: const EdgeInsets.symmetric(vertical: 17.0).copyWith(
-  //       left: 15.0,
-  //       right: 15.0,
-  //     ),
-  //     color: const Color.fromARGB(0, 255, 255, 255),
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.circular(10),
-  //     ),
-  //     child: GestureDetector(
-  //       onTap: () {
-  //         // Navigator.pushNamed(context, LoginPage.id);
-  //         setState(() {
-  //           selectLogin = true;
-  //         });
-  //       },
-  //       child: const Text(
-  //         'Iniciar sesión',
-  //         style: TextStyle(
-  //           color: Colors.black,
-  //           fontSize: 25,
-  //           fontWeight: FontWeight.bold,
-  //           fontFamily: 'montserrat',
-  //           letterSpacing: 1,
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _forgotPassword() {
     return Container(
@@ -241,34 +127,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Widget _textFieldUser() {
-  //   return _TextFieldGeneral(
-  //     'Nombre de Usuario',
-  //     'Ejemplo: Jaime Juarez',
-  //     Icons.person,
-  //     (value) {},
-  //     TextInputType.text,
-  //     false,
-  //     null,
-  //   );
-  // }
-
-  // Widget _textFieldEmail(LoginBloc bloc) {
-  //   return StreamBuilder(
-  //       stream: bloc.emailStream,
-  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //         return _TextFieldGeneral(
-  //           'Correo Electronico',
-  //           'Ejemplo: ExampleMail@mail.com',
-  //           Icons.email_outlined,
-  //           bloc.changeEmail,
-  //           TextInputType.emailAddress,
-  //           false,
-  //           snapshot.error,
-  //         );
-  //       });
-  // }
-
   Widget _textFieldEmailLogin(LoginBloc bloc) {
     return StreamBuilder(
       stream: bloc.emailStream,
@@ -289,22 +147,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Widget _textFieldPassword(LoginBloc bloc) {
-  //   return StreamBuilder(
-  //       stream: bloc.emailStream,
-  //       builder: (BuildContext context, AsyncSnapshot snapshot) {
-  //         return _TextFieldGeneral(
-  //           'Contraseña',
-  //           'Ejemplo: 123456',
-  //           Icons.lock_outline_rounded,
-  //           bloc.changePassword,
-  //           null,
-  //           true,
-  //           snapshot.error,
-  //         );
-  //       });
-  // }
-
   Widget _textFieldPasswordLogin(LoginBloc bloc) {
     return StreamBuilder(
       stream: bloc.emailStream,
@@ -324,14 +166,6 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
-//  const SizedBox(height: 35.0),
-//               _textFieldUser(),
-//               const SizedBox(height: 20.0),
-//               _textFieldEmail(),
-//               const SizedBox(height: 20.0),
-//               _textFieldPassword(),
-//               const SizedBox(height: 45.0),
-//               _buttonLogin(),
 
   Widget _columnLogin(LoginBloc bloc) {
     return Column(
@@ -367,67 +201,6 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-
-//   Widget _columnSingUp(LoginBloc bloc) {
-//     return Column(
-//       children: [
-//         const SizedBox(
-//           height: 25.0,
-//         ),
-//         _textFieldUser(),
-//         const SizedBox(
-//           height: 15.0,
-//         ),
-//         _textFieldEmail(bloc),
-//         const SizedBox(
-//           height: 15.0,
-//         ),
-//         _textFieldPassword(bloc),
-//         const SizedBox(
-//           height: 30.0,
-//         ),
-//         _buttonSingUp(),
-//         const SizedBox(
-//           height: 25.0,
-//         ),
-//         _buttonLoginText(),
-//       ],
-//     );
-//   }
-// }
-
-// Widget _linearGradiant() {
-//   return const LinearGradiant(
-//       Color(0xff020024), Color(0xff090979), Color(0xff00d4ff));
-// }
-
-// class LinearGradiant extends StatelessWidget {
-//   final Color color1;
-//   final Color color2;
-//   final Color color3;
-//   const LinearGradiant(
-//     this.color1,
-//     this.color2,
-//     this.color3,
-//   ) : super(key: const Key('LinearGradiant'));
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//         decoration: BoxDecoration(
-//             gradient: LinearGradient(
-//                 begin: Alignment.topCenter,
-//                 end: Alignment.bottomCenter,
-//                 colors: [
-//           // Color(0xff020024),
-//           // Color(0xff090979),
-//           // Color(0xff00d4ff)
-//           color1,
-//           color2,
-//           color3
-//         ])));
-//   }
-// }
 }
 
 class _TextFieldGeneral extends StatelessWidget {

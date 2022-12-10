@@ -1,6 +1,7 @@
 // ignore: unnecessary_import
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/pages/edit_user.dart';
 import 'package:flutter_application_1/pages/inventary_page.dart';
 import 'package:flutter_application_1/pages/register_user.dart';
 import 'package:flutter_application_1/services/firebase_service.dart';
@@ -91,6 +92,11 @@ class _CardsState extends State<Cards> {
         body: FutureBuilder(
             future: getUsers(),
             builder: ((context, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
               return ListView.builder(
                   itemCount: snapshot.data?.length,
                   itemBuilder: (context, index) {
@@ -102,6 +108,55 @@ class _CardsState extends State<Cards> {
                               " " +
                               '(${snapshot.data[index]["rol"]})'),
                           leading: const Icon(Icons.person),
+                          trailing: PopupMenuButton(
+                              itemBuilder: ((context) => [
+                                    PopupMenuItem(
+                                        child: ListTile(
+                                      leading: const Icon(Icons.delete),
+                                      title: const Text('Eliminar',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16,
+                                              fontFamily: 'Hoobie')),
+                                      onTap: () {
+                                        db
+                                            .collection('users')
+                                            .doc(snapshot.data[index]["id"])
+                                            .get()
+                                            .then((doc) {
+                                          if (doc.exists) {
+                                            doc.reference.delete();
+                                            setState(() {});
+                                            Navigator.pop(context);
+                                          }
+                                        });
+                                      },
+                                    )),
+                                    PopupMenuItem(
+                                        child: ListTile(
+                                      leading: const Icon(Icons.edit),
+                                      title: const Text('Editar',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 16,
+                                              fontFamily: 'Hoobie')),
+                                      onTap: () async {
+                                        // snapshot.data[index]["id"];
+                                        // await Navigator.pushNamed(
+                                        //     context, EditUser.id);
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => EditUser(
+                                                    userID: snapshot.data[index]
+                                                        ["id"])));
+                                        setState(() {});
+                                        Navigator.pop(context);
+                                      },
+                                    )),
+                                  ])),
                         ),
                       );
                     } else {

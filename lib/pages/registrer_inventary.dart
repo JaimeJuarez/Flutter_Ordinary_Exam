@@ -3,36 +3,38 @@ import 'package:flutter_application_1/services/firebase_service.dart';
 
 import '../blocks/login_Bloc.dart';
 
-class RegisterUser extends StatefulWidget {
-  static String id = "register_user";
-  const RegisterUser({Key key}) : super(key: key);
+class RegisterInventary extends StatefulWidget {
+  static String id = "register_inventary";
+  const RegisterInventary({Key key}) : super(key: key);
 
   @override
-  State<RegisterUser> createState() => _RegisterUserState();
+  State<RegisterInventary> createState() => _RegisterInventaryState();
 }
 
-class _RegisterUserState extends State<RegisterUser> {
-  final TextEditingController _userController = TextEditingController(text: "");
-  final TextEditingController _emailController =
+class _RegisterInventaryState extends State<RegisterInventary> {
+  final TextEditingController _noinventarioController =
       TextEditingController(text: "");
-  final TextEditingController _passwordController =
+  final TextEditingController _descripcionController =
       TextEditingController(text: "");
-  final TextEditingController _roleController = TextEditingController(text: "");
+  final TextEditingController _departamentoController =
+      TextEditingController(text: "");
+  final TextEditingController _imagenController =
+      TextEditingController(text: "");
   final TextEditingController _idController = TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Registro de Usuario'),
+          title: const Text('Registro de Inventario'),
           backgroundColor: Colors.black,
         ),
-        body: _columnSingUp(LoginBloc()),
+        body: _columnRegisterInventary(LoginBloc()),
       ),
     );
   }
 
-  Widget _columnSingUp(LoginBloc bloc) {
+  Widget _columnRegisterInventary(LoginBloc bloc) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -43,47 +45,48 @@ class _RegisterUserState extends State<RegisterUser> {
         const SizedBox(
           height: 25.0,
         ),
-        _textFieldUser(),
+        _textFieldNoInventario(),
         const SizedBox(
           height: 15.0,
         ),
-        _textFieldEmail(bloc),
+        _textFielddescripcion(bloc),
         const SizedBox(
           height: 15.0,
         ),
-        _textFieldPassword(bloc),
+        _textFieldDepartamento(bloc),
         const SizedBox(
           height: 15.0,
         ),
-        _textFieldRole(),
+        _textFieldImagen(),
         const SizedBox(
           height: 75.0,
         ),
-        _buttonSingUp(),
+        _buttonRegisterInventary(),
       ],
     );
   }
 
-  Widget _buttonSingUp() {
+  Widget _buttonRegisterInventary() {
     return MaterialButton(
         padding: const EdgeInsets.symmetric(horizontal: 110.0, vertical: 18.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
         onPressed: () async {
-          await addUser(
-                  _userController.text,
-                  _emailController.text,
-                  _passwordController.text,
-                  _roleController.text,
+          await addInventary(
+                  _noinventarioController.text,
+                  _descripcionController.text,
+                  _departamentoController.text,
+                  _imagenController.text,
                   _idController.text)
               .then((_) => {
+                    // setState(() {}),
                     Navigator.pop(context),
                   });
         },
         color: const Color.fromARGB(255, 0, 0, 0),
         child: Text(
-          'Registrar'.toUpperCase(),
+          'Agregar'.toUpperCase(),
           style: const TextStyle(
             color: Colors.white,
             fontSize: 18,
@@ -97,11 +100,11 @@ class _RegisterUserState extends State<RegisterUser> {
         stream: bloc.emailStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return _TextFieldGeneral(
-            'ID de Usuario',
-            'Ejemplo: 0123456789',
+            'Id del producto',
+            'Ejemplo: 01',
             Icons.numbers,
             bloc.changeEmail,
-            TextInputType.text,
+            null,
             false,
             snapshot.error,
             _idController,
@@ -109,63 +112,63 @@ class _RegisterUserState extends State<RegisterUser> {
         });
   }
 
-  Widget _textFieldUser() {
+  Widget _textFieldNoInventario() {
     return _TextFieldGeneral(
-      'Nombre de Usuario',
-      'Ejemplo: Jaime Juarez',
-      Icons.person,
+      'No. Inventario',
+      'Ejemplo: 01',
+      Icons.inventory_2_outlined,
       (value) {},
       TextInputType.text,
       false,
       null,
-      _userController,
+      _noinventarioController,
     );
   }
 
-  Widget _textFieldEmail(LoginBloc bloc) {
+  Widget _textFielddescripcion(LoginBloc bloc) {
     return StreamBuilder(
         stream: bloc.emailStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return _TextFieldGeneral(
-            'Correo Electronico',
-            'Ejemplo: ExampleMail@mail.com',
-            Icons.email_outlined,
+            'Descripción',
+            'Ejemplo: Xbox Series X',
+            Icons.description_outlined,
             bloc.changeEmail,
-            TextInputType.emailAddress,
+            TextInputType.text,
             false,
             snapshot.error,
-            _emailController,
+            _descripcionController,
           );
         });
   }
 
-  Widget _textFieldPassword(LoginBloc bloc) {
+  Widget _textFieldDepartamento(LoginBloc bloc) {
     return StreamBuilder(
         stream: bloc.emailStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           return _TextFieldGeneral(
-            'Contraseña',
-            'Ejemplo: 123456',
-            Icons.lock_outline_rounded,
-            bloc.changePassword,
+            'Departamento',
+            'Ejemplo: Electrónica, Linea Blanca, etc.',
+            Icons.text_snippet_outlined,
+            bloc.changeEmail,
             null,
-            true,
+            false,
             snapshot.error,
-            _passwordController,
+            _departamentoController,
           );
         });
   }
 
-  Widget _textFieldRole() {
+  Widget _textFieldImagen() {
     return _TextFieldGeneral(
-        'Rol de Usuario',
-        'Ejemplo: user or admin',
-        Icons.person_pin,
+        'Imagen',
+        'Ejemplo: https://th.bing.com/th/id/R.386d617de1476166435e8d020a10e981?rik=rJH%2fcl3S4kUmKQ&pid=ImgRaw&r=0',
+        Icons.image,
         (value) {},
         TextInputType.text,
         false,
         null,
-        _roleController);
+        _imagenController);
   }
 }
 

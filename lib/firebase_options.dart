@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '622138328729',
     projectId: 'ordinarioprogramacion-9055b',
     storageBucket: 'ordinarioprogramacion-9055b.appspot.com',
-    iosClientId: '622138328729-huh0cot3cf1msu19mcg1kefp9une1uml.apps.googleusercontent.com',
+    iosClientId:
+        '622138328729-huh0cot3cf1msu19mcg1kefp9une1uml.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '622138328729',
     projectId: 'ordinarioprogramacion-9055b',
     storageBucket: 'ordinarioprogramacion-9055b.appspot.com',
-    iosClientId: '622138328729-huh0cot3cf1msu19mcg1kefp9une1uml.apps.googleusercontent.com',
+    iosClientId:
+        '622138328729-huh0cot3cf1msu19mcg1kefp9une1uml.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 }
