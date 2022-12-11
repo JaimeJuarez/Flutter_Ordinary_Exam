@@ -29,7 +29,9 @@ class _RegisterInventaryState extends State<RegisterInventary> {
           title: const Text('Registro de Inventario'),
           backgroundColor: Colors.black,
         ),
-        body: _columnRegisterInventary(LoginBloc()),
+        body: SingleChildScrollView(
+          child: _columnRegisterInventary(LoginBloc()),
+        ),
       ),
     );
   }

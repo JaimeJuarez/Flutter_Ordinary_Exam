@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/firebase_service.dart';
 
@@ -19,6 +20,13 @@ class _RegisterUserState extends State<RegisterUser> {
       TextEditingController(text: "");
   final TextEditingController _roleController = TextEditingController(text: "");
   final TextEditingController _idController = TextEditingController(text: "");
+
+  Future SingUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,7 +35,9 @@ class _RegisterUserState extends State<RegisterUser> {
           title: const Text('Registro de Usuario'),
           backgroundColor: Colors.black,
         ),
-        body: _columnSingUp(LoginBloc()),
+        body: SingleChildScrollView(
+          child: _columnSingUp(LoginBloc()),
+        ),
       ),
     );
   }
@@ -80,6 +90,7 @@ class _RegisterUserState extends State<RegisterUser> {
               .then((_) => {
                     Navigator.pop(context),
                   });
+          SingUp();
         },
         color: const Color.fromARGB(255, 0, 0, 0),
         child: Text(

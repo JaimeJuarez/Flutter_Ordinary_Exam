@@ -21,24 +21,53 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool selectLogin = true;
-  String email, password;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  Future SingIn() async {
+    try {
+      final user = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+      if (user != null) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const UserPage();
+        }));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final bloc = ProviderLogin.of(context);
     return SafeArea(
       child: Scaffold(
-        body: Column(
+          body: SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 0.0),
+            // const SizedBox(height: 0.0),
+            // const SizedBox(height: 80.0),
             Stack(
               children: [
+                // Center(
+                //   child: Image(
+                //       image: const AssetImage('assets/icon/ebook.png'),
+                //       height: 100),
+                // ),
                 Container(
                     padding: const EdgeInsets.fromLTRB(20, 110, 0, 0),
+                    // padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
                     child: const Text(
                       "Hello James",
                       style: TextStyle(
@@ -50,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                     ))
               ],
             ),
-            const SizedBox(height: 35.0),
+            // const SizedBox(height: 35.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [],
@@ -58,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
             _columnLogin(bloc),
           ],
         ),
-      ),
+      )),
       // ),
     );
   }
@@ -69,32 +98,8 @@ class _LoginPageState extends State<LoginPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
         ),
-        onPressed: () async {
-          try {
-            final user = await _auth.signInWithEmailAndPassword(
-                email: email, password: password);
-            if (user != null) {
-              // ignore: use_build_context_synchronously
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const UserPage();
-              }));
-            }
-          } catch (e) {
-            // ignore: avoid_print
-            print(e);
-            AlertDialog(
-              title: const Text('Error'),
-              content: const Text('Error al iniciar sesion'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Ok'),
-                )
-              ],
-            );
-          }
+        onPressed: () {
+          SingIn();
         },
         color: const Color.fromARGB(255, 0, 0, 0),
         child: Text(
@@ -132,17 +137,11 @@ class _LoginPageState extends State<LoginPage> {
       stream: bloc.emailStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return _TextFieldGeneral(
-          'Correo Electronico',
-          'ExampleMail@mail.com',
-          Icons.mail_outline,
-          // bloc.changeEmail,
-          (value) {
-            email = value;
-          },
-          TextInputType.emailAddress,
-          false,
-          snapshot.error,
-        );
+            'Correo Electronico', 'ExampleMail@mail.com', Icons.mail_outline,
+            // bloc.changeEmail,
+            (value) {
+          // email = value;
+        }, TextInputType.emailAddress, false, snapshot.error, _emailController);
       },
     );
   }
@@ -152,17 +151,11 @@ class _LoginPageState extends State<LoginPage> {
       stream: bloc.emailStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return _TextFieldGeneral(
-          'Contraseña',
-          'Ejemplo: 123456',
-          Icons.lock_outline_rounded,
-          // bloc.changePassword,
-          (value) {
-            password = value;
-          },
-          null,
-          true,
-          snapshot.error,
-        );
+            'Contraseña', 'Ejemplo: 123456', Icons.lock_outline_rounded,
+            // bloc.changePassword,
+            (value) {
+          // password = value;
+        }, null, true, snapshot.error, _passwordController);
       },
     );
   }
@@ -173,6 +166,13 @@ class _LoginPageState extends State<LoginPage> {
         const SizedBox(
           height: 25.0,
         ),
+        // Center(
+        //   child: Image(
+        //       image: const AssetImage('assets/icon/ebook.png'), height: 100),
+        // ),
+        const SizedBox(
+          height: 25.0,
+        ),
         _textFieldEmailLogin(bloc),
         const SizedBox(
           height: 15.0,
@@ -180,14 +180,6 @@ class _LoginPageState extends State<LoginPage> {
         _textFieldPasswordLogin(bloc),
         const SizedBox(
           height: 25.0,
-        ),
-        const Text(
-          'Olvidé mi Contraseña',
-          style: TextStyle(
-            fontSize: 15.0,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
         ),
         _forgotPassword(),
         const SizedBox(
@@ -207,6 +199,7 @@ class _TextFieldGeneral extends StatelessWidget {
   final String labelText;
   final String hintText;
   final IconData icon;
+  final TextEditingController controller;
   // final void Function() onChanged;
   final Function onChanged;
   final TextInputType keyboardType;
@@ -220,6 +213,7 @@ class _TextFieldGeneral extends StatelessWidget {
     this.keyboardType,
     this.obscureText,
     this.errorText,
+    this.controller,
   );
   @override
   Widget build(BuildContext context) {
@@ -230,6 +224,7 @@ class _TextFieldGeneral extends StatelessWidget {
         color: Colors.white,
       ),
       child: TextField(
+        controller: controller,
         keyboardType: keyboardType,
         obscureText: obscureText,
         decoration: InputDecoration(
